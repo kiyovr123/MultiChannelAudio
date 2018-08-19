@@ -7,10 +7,14 @@ public class PointerController : MonoBehaviour
 {
     private static readonly float MAX_DISTANCE = 100f;
     private static readonly float DEFAULT_Z_POS = 10f;
+
     private Camera mainCamera;
     private Vector3 touchScreenPosition;
     private Vector3 touchWorldPosition;
     private bool isSelected = false;
+
+    private float xPos;
+    private float yPos;
 
     private void Start()
     {
@@ -24,6 +28,7 @@ public class PointerController : MonoBehaviour
     {
         MouseInput();
         UpdateMouseTransform();
+        MousePositionCalculater();
     }
 
     private void UpdateMouseTransform()
@@ -57,13 +62,29 @@ public class PointerController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float maxDistance = MAX_DISTANCE;
         RaycastHit2D hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, maxDistance);
+
         if (hit.collider)
         {
             if (hit.collider.gameObject.name == "Pointer")
             {
                 isSelected = true;
             }
-        }
-       
+        }       
+    }
+
+    private void MousePositionCalculater()
+    {
+        xPos = Mathf.InverseLerp(-4,4,this.transform.position.x);
+        yPos = Mathf.InverseLerp(-4,4,this.transform.position.y);
+    }
+
+    public float GetMouseXPos()
+    {
+        return xPos;
+    }
+
+    public float GetMouseYPos()
+    {
+        return yPos;
     }
 }
