@@ -5,14 +5,19 @@ using UnityEngine.UI;
 
 public class PointerController : MonoBehaviour
 {
+    //座標の最大と最小
+    //正方形にする
+    private static readonly float FIELD_MAX = 4f;
+    private static readonly float FIELD_MIN = -4f;
+    private static readonly Vector3 CENTER_VALUE = new Vector3(0, 0, 0);
     private static readonly float MAX_DISTANCE = 100f;
     private static readonly float DEFAULT_Z_POS = 10f;
 
     private Camera mainCamera;
     private Vector3 touchScreenPosition;
     private Vector3 touchWorldPosition;
-    private bool isSelected = false;
 
+    private bool isSelected = false;
     private float xPos;
     private float yPos;
 
@@ -69,13 +74,13 @@ public class PointerController : MonoBehaviour
             {
                 isSelected = true;
             }
-        }       
+        }
     }
 
     private void MousePositionCalculater()
     {
-        xPos = Mathf.InverseLerp(-4,4,this.transform.position.x);
-        yPos = Mathf.InverseLerp(-4,4,this.transform.position.y);
+        xPos = Mathf.InverseLerp(-4, 4, this.transform.position.x);
+        yPos = Mathf.InverseLerp(-4, 4, this.transform.position.y);
     }
 
     public float GetMouseXPos()
@@ -87,4 +92,6 @@ public class PointerController : MonoBehaviour
     {
         return yPos;
     }
+
+
 }
