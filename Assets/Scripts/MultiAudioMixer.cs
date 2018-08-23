@@ -40,3 +40,4 @@ public class MultiAudioMixer : MonoBehaviour
     }
 
 }
+//volumeの調整は、ointerの位置のみで判断するようにする
