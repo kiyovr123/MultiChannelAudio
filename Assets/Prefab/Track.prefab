@@ -55,3 +55,4 @@ MonoBehaviour:
   defaultAudioClip: {fileID: 8300000, guid: cc829a1c0509a2e49ad2437bb6c028ee, type: 3}
   channel: 2
   multiChannelTrackList: []
+  mixer: {fileID: 24300002, guid: c078478d6f7dd09489e3ec7acd0ec2ca, type: 2}

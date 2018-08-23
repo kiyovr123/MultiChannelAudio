@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MultiAudioTrack : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class MultiAudioTrack : MonoBehaviour
     private int channel=2;
     [SerializeField]
     private List<AudioClip> multiChannelTrackList;
-
+    [SerializeField]
+    private AudioMixerGroup mixer;
     private void Start()
     {
         InitAudioSouce(channel);
@@ -35,6 +37,9 @@ public class MultiAudioTrack : MonoBehaviour
             audioSourceList.Add(tempAudio[i]);
             audioSourceList[i].playOnAwake = false;
             audioSourceList[i].loop = true;
+            audioSourceList[i].outputAudioMixerGroup = mixer;
+
+            
         }
 
     }
