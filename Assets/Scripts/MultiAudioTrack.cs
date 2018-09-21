@@ -11,15 +11,16 @@ public class MultiAudioTrack : MonoBehaviour
     [SerializeField]
     private AudioClip defaultAudioClip;
     [SerializeField]
-    private int channel=2;
+    private int channel = 2;
     [SerializeField]
     private List<AudioClip> multiChannelTrackList;
     [SerializeField]
     private AudioMixerGroup mixer;
+
     private void Start()
     {
         InitAudioSouce(channel);
-        CreateMultiAudioClip();
+        //addされたタイミングで使えるclipをすべて参照持ってる必要がある
         PlayTrackSound();
     }
 
@@ -37,13 +38,14 @@ public class MultiAudioTrack : MonoBehaviour
             audioSourceList.Add(tempAudio[i]);
             audioSourceList[i].playOnAwake = false;
             audioSourceList[i].loop = true;
-            audioSourceList[i].outputAudioMixerGroup = mixer;
-
-            
+           // audioSourceList[i].outputAudioMixerGroup = mixer;
         }
+
+        CreateMultiAudioClip();
 
     }
 
+    //生成に引数でclipを与える
     public void CreateMultiAudioClip()
     {
         for (int i = 0; i < channel; i++)

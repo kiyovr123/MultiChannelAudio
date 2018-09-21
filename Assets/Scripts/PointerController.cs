@@ -18,8 +18,13 @@ public class PointerController : MonoBehaviour
     private Vector3 touchWorldPosition;
 
     private bool isSelected = false;
-    private float xPos;
-    private float yPos;
+    [SerializeField]
+    private float xPos = 1;
+    [SerializeField]
+    private float yPos = 1;
+
+    [SerializeField]
+    private Transform pointerTransform;
 
     private void Start()
     {
@@ -79,8 +84,8 @@ public class PointerController : MonoBehaviour
 
     private void MousePositionCalculater()
     {
-        xPos = Mathf.InverseLerp(-4, 4, this.transform.position.x);
-        yPos = Mathf.InverseLerp(-4, 4, this.transform.position.y);
+        xPos = Mathf.InverseLerp(-2.63f, 2.65f, pointerTransform.position.x);
+        yPos = Mathf.InverseLerp(-1.86f, 3.41f, pointerTransform.position.y);
     }
 
     public float GetMouseXPos()
@@ -92,6 +97,5 @@ public class PointerController : MonoBehaviour
     {
         return yPos;
     }
-
 
 }
