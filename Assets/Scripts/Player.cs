@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
 
+
     }
 
     private void Update()
@@ -56,7 +58,7 @@ public class Player : MonoBehaviour
             {
                 var track = hit.collider.gameObject.GetComponent<Track>();
                 TrackManager.Instance.CurrentTrack = track;
-                track.ChangeBackGroundImage();
+              //  track.ChangeBackGroundImage();
                 Debug.Log("Touch");
             }
 

@@ -12,6 +12,27 @@ public class TrackManager : SingletonMonoBehaviour<TrackManager>
     private Track _CurrentTrack;
     [SerializeField]
     private Transform _TrackParents;
+    [SerializeField]
+    private GameObject _Finder;
+
+    //clipのパス
+    [SerializeField]
+    private string _FolderPath = "D:/UnityProject/Multi/TrackList";
+
+    public void ActiveFiner()
+    {
+        _Finder.SetActive(true);
+    }
+
+    public void CloseFinder()
+    {
+        _Finder.SetActive(false);
+    }
+
+    public string GetFolderPath()
+    {
+        return _FolderPath;
+    }
 
     public Track CurrentTrack
     {
@@ -21,7 +42,7 @@ public class TrackManager : SingletonMonoBehaviour<TrackManager>
 
     private void Start()
     {
-        InitNewTrack();
+        // InitNewTrack();
     }
 
     /// <summary>
@@ -30,8 +51,13 @@ public class TrackManager : SingletonMonoBehaviour<TrackManager>
     public void InitNewTrack()
     {
         var obj = Instantiate(_TrackPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-        obj.transform.parent = _TrackParents.transform;
+        obj.transform.parent = _TrackParents;
         var track = obj.GetComponent<Track>();
+        _TrackList.Add(track);
+    }
+
+    public void AddTrackList(Track track)
+    {
         _TrackList.Add(track);
     }
 

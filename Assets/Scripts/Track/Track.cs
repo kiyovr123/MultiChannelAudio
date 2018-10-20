@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 using UnityEngine.Audio;
 
 public class Track : MonoBehaviour
@@ -21,14 +22,23 @@ public class Track : MonoBehaviour
     [SerializeField]
     private Slider _Volume;
     [SerializeField]
-    private Sprite _ActiveImage;
+    private Image[] _BackGroundSprite;
     [SerializeField]
-    private Sprite _NonActiveImage;
+    private Image[] _IconSprite;
+    [SerializeField]
+    private GameObject _ClipList;
 
-    private Image _BackGround;
-    private DataPath _DataPath;
+    private DataPath _DataPath=new DataPath();
+
     private AudioClip _CurrentAudioClip;
     private bool _IsActive;
+    [SerializeField]
+    private string[] _TempAllPath;
+
+    private string _SelectClipPath;
+
+    //audioclipの選択システムが必要
+    //pathを指定してそれを再生させる
 
     public Text TrackTitle
     {
@@ -41,25 +51,23 @@ public class Track : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        _BackGround = GetComponent<Image>();
+        TrackManager.Instance.AddTrackList(this);
         AddAudioSource();
+        LoadAudioClipByPath();
     }
 
-
-    /// <summary>
-    /// tackのimgaeのactiveとanonactiveの切り替え
-    /// </summary>
-    public void ChangeBackGroundImage()
+    public void LoadAudioClipByPath()
     {
-        if (_IsActive)
+        var path = "D:/UnityProject/Multi/TrackList";
+        _TempAllPath = Directory.GetFiles(path, "*.wav");
+    }
+
+    public IEnumerator StreamAudioClip()
+    {
+        using (WWW www = new WWW(_SelectClipPath))
         {
-            _BackGround.sprite = _NonActiveImage;          
-            return;
-        }
-        else
-        {
-            _BackGround.sprite = _ActiveImage;
-            return;
+            yield return www;
+            _CurrentAudioClip = www.GetAudioClip(false,true);
         }
     }
 
@@ -125,7 +133,7 @@ public class Track : MonoBehaviour
     }
 
     /// <summary>
-    /// それぞれのチャンネルのvolumeを変える
+    /// それぞれのチャンネルのvolumeを変える,TrackManagerから指定されたtrackのvolumeを変更する
     ///
     /// </summary>
     /// <param name="num"></param>
